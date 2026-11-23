@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ДМИТРИЙ ВОРОНИН // ДЕНЬ 0 — публичная сборка с нуля</title>
+<meta name="description" content="Точка отсчёта Дмитрия Воронина: только живые прототипы на витрине, честная очередь замыслов, дневник сборки и голосование за следующий билд.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="./assets/js/bootstrap.js"></script>
+<link rel="stylesheet" href="./assets/css/base.css">
+<link rel="stylesheet" href="./assets/css/sections.css">
+<link rel="stylesheet" href="./assets/css/overlays.css">
+<link rel="stylesheet" href="./assets/css/responsive.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7 10l5 5 5-5M4 20h16"/></g></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></g></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-ar" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 20h20L12 3z"/><path d="M12 10v4M12 17.2v.3"/></g></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="currentColor"/></symbol>
+<symbol id="i-pad" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/></g><g fill="currentColor"><circle cx="16" cy="11" r="1.2"/><circle cx="18.6" cy="14" r="1.2"/></g></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/><rect x="10.3" y="10.3" width="3.4" height="3.4"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></g></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0z"/><path d="M12 6v13"/></g></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6.3L4.2 19a2 2 0 0 0 1.8 3h12a2 2 0 0 0 1.8-3L14 8.3V2"/><path d="M8 2h8M7.3 15h9.4"/></g></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5l9 6 9-6"/></g></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></g></symbol>
+<symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 9.2a4 4 0 0 1 0 5.6M18.6 6.6a8 8 0 0 1 0 10.8"/></g></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-term" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></g></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></g></symbol>
+<symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><g fill="currentColor"><circle cx="8.2" cy="8.2" r="1.4"/><circle cx="15.8" cy="8.2" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="8.2" cy="15.8" r="1.4"/><circle cx="15.8" cy="15.8" r="1.4"/></g></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><circle cx="12" cy="13" r="3.6"/><path d="M8.5 7L10 4h4l1.5 3"/></g></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></g></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-glitch" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="13" height="9" rx="1.5"/><rect x="8" y="10" width="13" height="9" rx="1.5"/></g></symbol>
+<symbol id="i-deck" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="6" y="3" width="13" height="16" rx="2"/><path d="M3.5 7v12a2 2 0 0 0 2 2H16"/><path d="M9.5 8h6M9.5 12h6"/></g></symbol>
+<symbol id="i-hud" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 17a9 9 0 1 1 16 0"/><path d="M12 13l4-4"/><path d="M3 21h18"/></g></symbol>
+<symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12h2.5l2-6 3 12 3-16 3 14 2-4H22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21C7 16.5 3 13.3 3 9.3 3 6.4 5.2 4.5 7.7 4.5c1.7 0 3.3.9 4.3 2.4 1-1.5 2.6-2.4 4.3-2.4 2.5 0 4.7 1.9 4.7 4.8 0 4-4 7.2-9 11.7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div id="aurora" aria-hidden="true"><div class="aur-in"></div></div>
+<canvas id="rain" aria-hidden="true"></canvas>
+<div class="fx-vig" aria-hidden="true"></div>
+<div class="fx-scan" aria-hidden="true"></div>
+<div class="fx-grain" aria-hidden="true"></div>
+<div id="cursorGlow" aria-hidden="true"></div>
+
+<div id="boot" role="status" aria-label="Загрузка">
+  <div class="boot-logo">DV<em>://</em>OS</div>
+  <div class="boot-ver">V0.1 · DAY ZERO BUILD</div>
+  <div id="bootLog" aria-hidden="true"></div>
+  <div class="boot-track"><div id="bootBar"></div></div>
+  <div class="boot-hint">КЛИК — ПРОПУСТИТЬ</div>
+</div>
+
+<header id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#top" aria-label="На главную"><span class="logo-chip">DV</span><span>ВОРОНИН<em>_</em><small>ПУБЛИЧНАЯ СБОРКА · ЧЕЛОВЕК × ИИ</small></span></a>
+    <span class="day-chip">ДЕНЬ 0</span>
+    <nav class="nav-links" aria-label="Навигация">
+      <a class="nav-a" href="#live">ЖИВОЕ</a>
+      <a class="nav-a" href="#queue">ОЧЕРЕДЬ</a>
+      <a class="nav-a" href="#log">ДНЕВНИК</a>
+      <a class="nav-a" href="#learn">ПИЛОТ</a>
+      <a class="nav-a" href="#about">АВТОР</a>
+    </nav>
+    <div class="nav-right">
+      <button class="snd-btn on" data-action="sound-toggle" aria-pressed="true" aria-label="Переключить звук">
+        <svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg><span class="snd-lbl">ВКЛ</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <a class="btn btn-p btn-sm nav-cta" href="#contact"><svg class="ic" aria-hidden="true"><use href="#i-send"></use></svg>Сигнал</a>
+      <button class="burger" data-action="menu" aria-expanded="false" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <span class="nav-progress" id="progressBar" aria-hidden="true"></span>
+</header>
+
+<div id="menu" aria-label="Мобильное меню">
+  <a class="m-link" style="--i:0" href="#live"><b>01</b>ЖИВОЕ</a>
+  <a class="m-link" style="--i:1" href="#queue"><b>02</b>ОЧЕРЕДЬ</a>
+  <a class="m-link" style="--i:2" href="#log"><b>03</b>ДНЕВНИК</a>
+  <a class="m-link" style="--i:3" href="#learn"><b>04</b>ПИЛОТ</a>
+  <a class="m-link" style="--i:4" href="#about"><b>05</b>АВТОР</a>
+  <a class="m-link" style="--i:5" href="#contact"><b>06</b>СИГНАЛ</a>
+  <div class="menu-foot">
+    <button class="snd-btn on" data-action="sound-toggle" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg><span class="snd-lbl">ВКЛ</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></button>
+    <span class="chip">ДЕНЬ 0 · GMT+3</span>
+  </div>
+</div>
+
+<main>
+<section class="hero" id="top" data-sec="top">
+  <div class="hero-fx" aria-hidden="true">
+    <div class="px" data-px="0.16"><div class="orb o1"></div><div class="orb o2"></div></div>
+    <div class="px" data-px="0.09"><div class="orb o3"></div><div class="hero-floor"></div></div>
+  </div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-chip stage" style="--sd:.05s"><i></i>ДЕНЬ 0 · ВСЁ С НУЛЯ · ПУБЛИЧНО</span>
+        <h1 class="glitch stage" style="--sd:.14s" data-text="ДМИТРИЙ">ДМИТРИЙ</h1>
+        <h1 class="glitch g2 stage" style="--sd:.22s" data-text="ВОРОНИН">ВОРОНИН</h1>
+        <div class="role-line stage" style="--sd:.32s">&gt;&nbsp;<span id="typed"></span><span class="caret" aria-hidden="true"></span></div>
+        <p class="hero-p stage" style="--sd:.4s">Это не витрина достижений — это <b>точка отсчёта</b>. Правило цеха: на полках только то, что можно потрогать сегодня. Чего ещё нет — честно помечено как замысел, и ты решаешь, что я соберу первым.</p>
+        <div class="hero-ctas stage" style="--sd:.48s">
+          <button class="btn btn-p" data-action="play-snake"><svg class="ic" aria-hidden="true"><use href="#i-play"></use></svg>Играть: прототип #001</button>
+          <a class="btn btn-s" href="#queue"><svg class="ic" aria-hidden="true"><use href="#i-flask"></use></svg>Что в очереди</a>
+          <a class="hero-link" href="#log">дневник сборки →</a>
+        </div>
+        <div class="legend hero-legend stage" style="--sd:.54s">
+          <span class="st st-ok"><i></i>РАБОТАЕТ СЕЙЧАС</span>
+          <span class="st st-warn"><i></i>В ОЧЕРЕДИ</span>
+          <span class="st st-dim"><i></i>ЗАМЫСЕЛ</span>
+        </div>
+        <div class="hero-stats stage" style="--sd:.6s">
+          <div class="stat"><b><span data-count="6">0</span></b><span>живых модулей</span></div>
+          <div class="stat"><b><span data-count="7">0</span></b><span>замыслов в очереди</span></div>
+          <div class="stat"><b><span data-count="1">0</span></b><span>играбельный билд</span></div>
+          <div class="stat"><b><span data-count="0">0</span></b><span>фейковых релизов</span></div>
+        </div>
+      </div>
+      <div class="core-col">
+        <div class="core-frame stage" style="--sd:.3s">
+          <div id="coreStage" aria-label="3D-ядро: тяни — вращай, колесо — зум"></div>
+          <div id="coreFallback" class="hide">
+            <svg viewBox="0 0 200 200" width="220" aria-hidden="true"><defs><radialGradient id="fbg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#00f0ff" stop-opacity=".5"/><stop offset="1" stop-color="#00f0ff" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="86" fill="url(#fbg)"/><g fill="none" stroke="#00f0ff"><polygon points="100,38 154,69 154,131 100,162 46,131 46,69" stroke-opacity=".8"/><polygon points="100,58 136,79 136,121 100,142 64,121 64,79" stroke-opacity=".45" stroke="#ff2bd6"/><circle cx="100" cy="100" r="20" stroke="#ffc233" stroke-opacity=".8"/></g><text x="100" y="188" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#5a6288">3D-ЯДРО НЕДОСТУПНО · ОФЛАЙН-РЕЖИМ</text></svg>
+          </div>
+          <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+          <div class="core-hud"><span>CORE//ЯДРО v0.1</span><span><span id="hudState">ACTIVE</span> · <span id="hudFps">-- FPS</span></span></div>
+          <div class="core-hint">ТЯНИ — ВРАЩАЙ · КОЛЕСО — ЗУМ · ДВОЙНОЙ КЛИК — СБРОС</div>
+        </div>
+        <div class="console panel stage" style="--sd:.5s" id="console">
+          <div class="console-head"><b><i></i>КОНСОЛЬ СЦЕНЫ</b><span>REALTIME // LIVE</span></div>
+          <div class="console-grid">
+            <div class="ctl"><label for="cHue">Палитра ядра</label>
+              <select id="cHue"><option value="187">ЦИАН // CYAN</option><option value="311">МАГЕНТА // MAGENTA</option><option value="84">ЛАЙМ // LIME</option><option value="42">ЯНТАРЬ // AMBER</option><option value="custom" hidden>КАСТОМ</option></select></div>
+            <div class="ctl"><label for="cSpeed">Скорость <output id="oSpeed">100%</output></label><input type="range" id="cSpeed" min="0" max="200" value="100"></div>
+            <div class="ctl"><label for="cParts">Частицы <output id="oParts">900</output></label><input type="range" id="cParts" min="0" max="2000" step="50" value="900"></div>
+            <div class="ctl"><label for="cGlow">Свечение <output id="oGlow">60%</output></label><input type="range" id="cGlow" min="0" max="100" value="60"></div>
+          </div>
+          <div class="console-tgls">
+            <label class="tgl"><input type="checkbox" id="cWire" checked><span class="tgl-ui"></span>Каркас</label>
+            <label class="tgl"><input type="checkbox" id="cGrid" checked><span class="tgl-ui"></span>Сетка</label>
+            <label class="tgl"><input type="checkbox" id="cAuto" checked><span class="tgl-ui"></span>Авто-вращение</label>
+          </div>
+          <div class="console-btns">
+            <button class="btn btn-ghost btn-sm" data-action="c-reset"><svg class="ic" aria-hidden="true"><use href="#i-reset"></use></svg>Сброс</button>
+            <button class="btn btn-ghost btn-sm" data-action="c-rand"><svg class="ic" aria-hidden="true"><use href="#i-dice"></use></svg>Рандом</button>
+            <button class="btn btn-s btn-sm" data-action="c-shot"><svg class="ic" aria-hidden="true"><use href="#i-cam"></use></svg>PNG-кадр</button>
+          </div>
+          <div id="consoleNote" class="hide">⚠ WebGL/CDN недоступен — консоль отключена, сайт работает дальше.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint stage" style="--sd:.75s" aria-hidden="true">ЛИСТАЙ<svg class="ic"><use href="#i-down"></use></svg></div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<!-- LIVE -->
+<section class="sec" id="live" data-sec="live" style="--acc:var(--ok)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kick"><span>[ 01 // УЖЕ РАБОТАЕТ ]</span><span class="line"></span><span class="dots">▮▮▮▮▮</span></div>
+      <h2 class="sec-title"><span class="ghost">01</span>ЖИВОЕ НА СЕГОДНЯ</h2>
+      <p class="sec-sub">Всё ниже существует и работает <b>в этой вкладке</b> — прямо сейчас, без установки. Это и есть мои первые релизы: маленькие, честные, играбельные.</p>
+    </div>
+
+    <div class="live-feat panel energy rv">
+      <div class="lf-cover" id="featCover"></div>
+      <div class="lf-body">
+        <span class="lf-kick">ПРОТОТИП #001 · СОБРАН СЕГОДНЯ · ЧЕЛОВЕК × ИИ</span>
+        <h3 class="lf-title">GRID RUNNER</h3>
+        <p>Первый играбельный билд цеха: змей в неоновой магистрали данных. Три скорости, рекорд между сессиями, звук синтезируется на лету. От промпта до играбельного — один вечер. Это доказательство пайплайна, а не обещание.</p>
+        <div class="lf-chips"><span class="chip acc">БЕЗ УСТАНОВКИ</span><span class="chip acc">60 FPS</span><span class="chip acc">РЕКОРД ЛОКАЛЬНО</span><span class="chip acc">WASD · СВАЙП</span></div>
+        <div class="lf-acts">
+          <button class="btn btn-p" data-action="play-snake"><svg class="ic" aria-hidden="true"><use href="#i-play"></use></svg>Играть сейчас</button>
+          <button class="btn btn-s" data-action="lesson"><svg class="ic" aria-hidden="true"><use href="#i-book"></use></svg>Как он сделан</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="forge panel rv" id="forge" style="--acc:var(--prime)">
+      <div class="forge-head">
+        <span class="p-ico" style="width:40px;height:40px"><svg class="ic" aria-hidden="true"><use href="#i-glitch"></use></svg></span>
+        <span class="fname">GLITCH.FORGE</span><span class="fver mono">v0.1</span>
+        <span class="st st-ok"><i></i>РАБОТАЕТ ЗДЕСЬ</span>
+        <span class="spacer"></span>
+        <span class="chip">ТЕКСТ → CSS/HTML ЗА КЛИК</span>
+      </div>
+      <div class="forge-grid">
+        <div class="forge-controls">
+          <div class="field" style="margin:0"><label class="f-label" for="gfText">Твой текст</label><input class="f-input" id="gfText" value="ДЕНЬ НОЛЬ" maxlength="24" autocomplete="off"></div>
+          <div class="frow2">
+            <div class="ctl"><label for="gfInt">Интенсивность <output id="oInt">55</output></label><input type="range" id="gfInt" min="0" max="100" value="55"></div>
+            <div class="ctl"><label for="gfSpeed">Период <output id="oGSpeed">0.9с</output></label><input type="range" id="gfSpeed" min="20" max="300" value="90"></div>
+          </div>
+          <div class="frow2">
+            <div class="ctl"><label for="gfHue">Неон</label><select id="gfHue"><option value="cyan">ЦИАН × МАГЕНТА</option><option value="magenta">МАГЕНТА × ЦИАН</option><option value="lime">ЛАЙМ × СИНЬ</option><option value="amber">ЯНТАРЬ × АЛЫЙ</option></select></div>
+            <div class="ctl"><label>&nbsp;</label><label class="tgl" style="padding-top:8px"><input type="checkbox" id="gfScan" checked><span class="tgl-ui"></span>Скан-линии</label></div>
+          </div>
+          <div class="forge-btns">
+            <button class="btn btn-p btn-sm" data-action="gf-copy"><svg class="ic" aria-hidden="true"><use href="#i-copy"></use></svg>CSS</button>
+            <button class="btn btn-s btn-sm" data-action="gf-html"><svg class="ic" aria-hidden="true"><use href="#i-dl"></use></svg>.HTML</button>
+            <button class="btn btn-ghost btn-sm" data-action="gf-rand"><svg class="ic" aria-hidden="true"><use href="#i-dice"></use></svg>Рандом</button>
+          </div>
+        </div>
+        <div class="forge-out">
+          <div class="gf-stage"><div class="gf-live" id="gfLive" data-text="ДЕНЬ НОЛЬ">ДЕНЬ НОЛЬ</div></div>
+          <div class="gf-code-head"><span>ЭКСПОРТ // GLITCH.CSS</span><span>ГОТОВ К ВСТАВКЕ</span></div>
+          <pre class="gf-code" id="gfCode" tabindex="0" aria-label="Сгенерированный CSS"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-modules" id="liveModules"></div>
+
+    <div class="lab-grid">
+      <div class="term panel rv" id="termPanel" style="--acc:var(--lim)">
+        <div class="term-head"><i></i><i></i><i></i><span>guest@dv-os: ~ — терминал · живой</span></div>
+        <div class="term-out" id="termOut" aria-live="polite"></div>
+        <div class="term-inrow"><span class="term-ps">guest@dv-os:~$</span><input id="termIn" autocomplete="off" spellcheck="false" placeholder="help…" aria-label="Команда терминала"></div>
+      </div>
+      <div class="pal panel rv" id="palPanel" style="--d:100ms;--acc:var(--mag)">
+        <div class="pal-head"><span>НЕОН-ПАЛИТРЫ // GEN</span><span>КЛИК = КОПИЯ HEX</span></div>
+        <div class="pal-row" id="palRow"></div>
+        <div class="pal-btns">
+          <button class="btn btn-p btn-sm" data-action="pal-gen"><svg class="ic" aria-hidden="true"><use href="#i-dice"></use></svg>Сгенерить</button>
+          <button class="btn btn-s btn-sm" data-action="pal-apply"><svg class="ic" aria-hidden="true"><use href="#i-zap"></use></svg>В ядро</button>
+          <button class="btn btn-ghost btn-sm" data-action="pal-export"><svg class="ic" aria-hidden="true"><use href="#i-dl"></use></svg>JSON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEUE -->
+<section class="sec" id="queue" data-sec="queue" style="--acc:var(--amb)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kick"><span>[ 02 // ЧЕГО ЕЩЁ НЕТ ]</span><span class="line"></span><span class="dots">▮▮▯▯▯</span></div>
+      <h2 class="sec-title"><span class="ghost">02</span>ОЧЕРЕДЬ СБОРКИ</h2>
+      <p class="sec-sub">Этих вещей <b>пока не существует</b> — ниже замыслы, а не продукты. Пустая полка — это план, не обман. Отметь «мне нужно», расставь порядок и отправь мне сигнал: <b>очередь строится по вашим приоритетам</b>.</p>
+    </div>
+    <div class="queue-wrap">
+      <div>
+        <div class="queue-bar rv" id="queueFilters">
+          <button class="chip on" data-action="filter" data-f="all">ВСЕ</button>
+          <button class="chip" data-action="filter" data-f="game">ИГРЫ</button>
+          <button class="chip" data-action="filter" data-f="tool">ИНСТРУМЕНТЫ</button>
+          <button class="chip" data-action="filter" data-f="learn">ОБУЧЕНИЕ</button>
+        </div>
+        <div class="queue-grid" id="queueGrid"></div>
+      </div>
+      <aside class="prio panel rv" style="--d:120ms" aria-label="Твой приоритет">
+        <div class="prio-head"><span>ТВОЙ ПРИОРИТЕТ</span><b><span id="prioCount">0</span>/7</b></div>
+        <p class="prio-note">Хранится на твоём устройстве. Перетаскивай строки или жми ▲▼ — порядок в письме будет таким же.</p>
+        <ol class="prio-list" id="prioList"></ol>
+        <div class="prio-acts">
+          <button class="btn btn-p btn-sm" data-action="prio-mail"><svg class="ic" aria-hidden="true"><use href="#i-send"></use></svg>Отправить письмом</button>
+          <button class="btn btn-s btn-sm" data-action="prio-copy"><svg class="ic" aria-hidden="true"><use href="#i-copy"></use></svg>Скопировать список</button>
+          <button class="btn btn-ghost btn-sm" data-action="prio-reset"><svg class="ic" aria-hidden="true"><use href="#i-reset"></use></svg>Сбросить</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- LOG -->
+<section class="sec" id="log" data-sec="log" style="--acc:var(--prime)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kick"><span>[ 03 // ДНЕВНИК СБОРКИ ]</span><span class="line"></span><span class="dots">▮▮▮▯▯</span></div>
+      <h2 class="sec-title"><span class="ghost">03</span>ДЕНЬ 0: ЗАПИСИ</h2>
+      <p class="sec-sub">Каждая запись — факт, который можно проверить кнопкой. Никаких «скоро»: следующая запись появится, когда следующий билд станет играбельным.</p>
+    </div>
+    <div class="log-list" id="logList"></div>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section class="sec" id="learn" data-sec="learn" style="--acc:var(--amb)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kick"><span>[ 04 // ОБУЧЕНИЕ ]</span><span class="line"></span><span class="dots">▮▯▯▯▯</span></div>
+      <h2 class="sec-title"><span class="ghost">04</span>НАУЧУ, КОГДА БУДЕТ ЧЕМУ</h2>
+      <p class="sec-sub">Курса пока нет — и я не продаю воздух. Есть <b>бесплатный урок-разбор</b> уже сегодня и честный план пилота: 10 мест, бесплатно за подробный фидбек. Старт — при двух условиях ниже.</p>
+    </div>
+    <div class="learn-grid">
+      <div class="learn-card panel energy rv" style="--acc:var(--prime)">
+        <span class="st st-ok"><i></i>УРОК 0.1 · ГОТОВ И ОТКРЫТ</span>
+        <h3>КАК Я ДЕЛАЮ ИГРЫ С ИИ</h3>
+        <p>Настоящий разбор моего пайплайна: почему ИИ — джуниор, а не оракул; промпт, который пишет играбельный код; правило двадцати минут; домашка со сравнением с моим прототипом. Читается за 6 минут.</p>
+        <div class="lf-chips"><span class="chip acc">БЕЗ РЕГИСТРАЦИИ</span><span class="chip acc">С ПРОМПТОМ</span><span class="chip acc">С ДОМАШКОЙ</span></div>
+        <button class="btn btn-p" data-action="lesson"><svg class="ic" aria-hidden="true"><use href="#i-book"></use></svg>Читать бесплатный урок</button>
+        <div class="acc" style="--acc:var(--prime)">
+          <button class="acc-btn" data-action="acc" aria-expanded="false"><span>Черновик программы пилота · 6 модулей</span><svg class="ic"><use href="#i-chev"></use></svg></button>
+          <div class="acc-body"><div><ol class="mods">
+            <li><b>01</b><span>Пайплайн человека и ИИ<small>роли, инструменты, прототип за вечер</small></span></li>
+            <li><b>02</b><span>Промпты, которые пишут код<small>декомпозиция, критерии готовности, ревью</small></span></li>
+            <li><b>03</b><span>Геймдизайн и баланс<small>core loop, сложность, ИИ-плейтесты</small></span></li>
+            <li><b>04</b><span>Арт и звук с нейросетями<small>спрайты, палитры, синтез саундтрека</small></span></li>
+            <li><b>05</b><span>Полировка и QA<small>баги, утечки, 60 FPS</small></span></li>
+            <li><b>06</b><span>Релиз и витрина<small>страница, пресс-кит, фидбек</small></span></li>
+          </ol></div></div>
+        </div>
+      </div>
+      <div class="learn-card panel energy rv" style="--d:100ms;--acc:var(--amb)" id="waitCard">
+        <span class="st st-warn"><i></i>ПИЛОТ · ЛИСТ ОЖИДАНИЯ ОТКРЫТ</span>
+        <h3>ПЕРВЫЙ ПОТОК: 10 МЕСТ ЗА ФИДБЕК</h3>
+        <div class="cond">
+          <div class="cond-row"><small><span>УСЛОВИЕ 1: ЖИВЫХ ПРОТОТИПА ДЛЯ РАЗБОРА</span><b>1 / 3</b></small><div class="bar"><i style="--v:33%"></i></div></div>
+          <div class="cond-row"><small><span>УСЛОВИЕ 2: ГРУППА ПИЛОТА</span><b>0 / 10</b></small><div class="bar"><i style="--v:0%"></i></div></div>
+        </div>
+        <form id="waitForm" novalidate>
+          <div class="frow">
+            <div class="field"><label class="f-label" for="wfName">Имя</label><input id="wfName" placeholder="Как к тебе обращаться" autocomplete="name"><small class="ferr"></small></div>
+            <div class="field"><label class="f-label" for="wfEmail">Email</label><input id="wfEmail" type="email" placeholder="you@neon.dev" autocomplete="email"><small class="ferr"></small></div>
+          </div>
+          <div class="field"><label class="f-label" for="wfGoal">Что хочешь уметь через 2 месяца?</label><textarea id="wfGoal" placeholder="Например: собрать свою первую игру с ИИ и выложить её…"></textarea><small class="ferr"></small></div>
+          <button class="btn btn-p btn-block" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-send"></use></svg>В лист пилота</button>
+          <p class="form-note"><b>Честно:</b> сервера у сайта пока нет — кнопка соберёт письмо-заявку, отправишь его ты. Никаких скрытых подписок.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about" data-sec="about" style="--acc:var(--vio)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kick"><span>[ 05 // АВТОР ]</span><span class="line"></span><span class="dots">▮▮▮▮▯</span></div>
+      <h2 class="sec-title"><span class="ghost">05</span>ЧЕЛОВЕК В НАЧАЛЕ ПУТИ</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-left rv">
+        <div class="portrait panel">
+          <svg viewBox="0 0 320 380" role="img" aria-label="Неоновый портрет Дмитрия Воронина">
+            <defs><radialGradient id="pt-bg" cx=".5" cy=".42" r=".7"><stop offset="0" stop-color="#1b1040"/><stop offset="1" stop-color="#070512"/></radialGradient><linearGradient id="pt-vis" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#3d7bff"/></linearGradient><filter id="pt-g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+            <rect width="320" height="380" fill="url(#pt-bg)"/>
+            <g stroke="#7b2bff" stroke-opacity=".28" fill="none"><circle cx="160" cy="160" r="122" stroke-dasharray="4 7"/><circle cx="160" cy="160" r="98" stroke-dasharray="2 10" stroke="#00f0ff" stroke-opacity=".2"/></g>
+            <g stroke="#00f0ff" stroke-opacity=".1"><path d="M0 330h320M0 350h320M40 320v60M120 320v60M200 320v60M280 320v60"/></g>
+            <path d="M60 380 L70 292 L122 252 L160 244 L198 252 L250 292 L260 380 Z" fill="#0c1230" stroke="#1d2a55"/>
+            <path d="M122 252 L160 270 L198 252" fill="none" stroke="#00f0ff" stroke-opacity=".8" filter="url(#pt-g)"/>
+            <path d="M160 270 V380" stroke="#7b2bff" stroke-opacity=".7"/>
+            <path d="M84 306 L112 292 M236 306 L208 292" stroke="#ff2bd6" stroke-opacity=".55"/>
+            <polygon points="160,296 172,318 148,318" fill="#ff2bd6" opacity=".9" filter="url(#pt-g)"/>
+            <rect x="146" y="214" width="28" height="30" fill="#141b3e"/>
+            <path d="M120 100 L200 100 L206 160 L186 208 L160 222 L134 208 L114 160 Z" fill="#1a2142" stroke="#2a3565"/>
+            <path d="M112 110 L120 64 L148 84 L160 56 L178 82 L206 62 L210 112 L198 96 L160 88 L124 98 Z" fill="#10173a" stroke="#2a3565"/>
+            <path d="M120 64 L148 84 L160 56 L178 82 L206 62" fill="none" stroke="#ff2bd6" stroke-opacity=".85" filter="url(#pt-g)"/>
+            <rect x="117" y="127" width="86" height="27" rx="7" fill="url(#pt-vis)" opacity=".95" filter="url(#pt-g)"/>
+            <rect x="112" y="131" width="86" height="8" fill="#00f0ff" opacity=".35"/>
+            <rect x="124" y="146" width="86" height="6" fill="#ff2bd6" opacity=".3"/>
+            <path d="M124 134 L196 134" stroke="#fff" stroke-opacity=".65"/>
+            <path d="M134 178 h14 v12" fill="none" stroke="#00f0ff" stroke-opacity=".55"/>
+            <path d="M146 196 L174 196" stroke="#3a4470" stroke-width="2"/>
+            <circle cx="206" cy="152" r="7" fill="#0c1230" stroke="#ffc233" filter="url(#pt-g)"/>
+            <path d="M206 145 L212 128" stroke="#ffc233" stroke-opacity=".8"/>
+            <circle cx="212" cy="126" r="2.4" fill="#ffc233" filter="url(#pt-g)"/>
+            <path d="M10 10h20M10 10v20M310 370h-20M310 370v-20" stroke="#00f0ff" stroke-opacity=".6" fill="none"/>
+            <text x="160" y="368" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" letter-spacing="2" fill="#8f97bd">SUBJECT: D.VORONIN // DAY ZERO BUILD</text>
+          </svg>
+        </div>
+        <div class="about-status panel">
+          <span class="st st-ok"><i></i>СТРОЮ ПУБЛИЧНО · ДЕНЬ 0</span>
+          <span>БАЗА: РОССИЯ · GMT+3</span>
+          <span>РЕЖИМ: ЧЕЛОВЕК × ИИ</span>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="bio rv">
+          <p>Привет. Я <b>Дмитрий Воронин</b>, и у меня нет портфолио из десятков релизов — есть первый день, первый играбельный прототип и очередь замыслов. Вместо того чтобы ждать «когда будет чем хвастаться», я строю <b>публично</b>: каждый рабочий билд сразу попадает на эту страницу, каждый замысел честно стоит в очереди.</p>
+          <p>Мой напарник — ИИ: он ускоряет код, арт и звук, а я отвечаю за архитектуру, вкус и финальное «да». Правило одно: <b>витрина — только для живого</b>. Пустые полки показываются как план, и ты можешь переставить его местами.</p>
+        </div>
+        <blockquote class="quote rv" style="--d:60ms">«Пустая полка — это план. Витрина — только то, что можно потрогать.»</blockquote>
+        <div class="rv" style="--d:80ms">
+          <div class="block-t">ПАЙПЛАЙН // КАК ЗАМЫСЕЛ СТАНОВИТСЯ БИЛДОМ</div>
+          <ol class="steps">
+            <li><b>01</b><h4>ИСКРА</h4><p>Одна фраза о чувстве игрока. Замысел попадает в очередь.</p></li>
+            <li><b>02</b><h4>СИГНАЛ</h4><p>Ваши приоритеты решают, что строится первым.</p></li>
+            <li><b>03</b><h4>ПРОТОТИП</h4><p>Играбельный билд за дни. Запись в дневнике.</p></li>
+            <li><b>04</b><h4>ПОЛИРОВКА</h4><p>Баланс, баги, утечки, 60 FPS — вручную.</p></li>
+            <li><b>05</b><h4>ПОЛКА</h4><p>Переезд из очереди в «живое». Только теперь — релиз.</p></li>
+          </ol>
+        </div>
+        <div class="rv" style="--d:100ms">
+          <div class="block-t">КУДА УХОДИТ ВРЕМЯ СЕЙЧАС // ЧЕСТНОЕ РАСПРЕДЕЛЕНИЕ</div>
+          <div class="skills">
+            <div class="skill" style="--sc:#00f0ff"><div class="srow"><span>ПРОТОТИПЫ ИГР</span><b>40%</b></div><div class="bar"><i style="--v:40%"></i></div></div>
+            <div class="skill" style="--sc:#ff2bd6"><div class="srow"><span>ИНСТРУМЕНТЫ ДЛЯ ЛЮДЕЙ</span><b>25%</b></div><div class="bar"><i style="--v:25%"></i></div></div>
+            <div class="skill" style="--sc:#ffc233"><div class="srow"><span>ДНЕВНИК И УРОКИ</span><b>20%</b></div><div class="bar"><i style="--v:20%"></i></div></div>
+            <div class="skill" style="--sc:#7b2bff"><div class="srow"><span>ЯДРО САЙТА</span><b>15%</b></div><div class="bar"><i style="--v:15%"></i></div></div>
+          </div>
+        </div>
+        <div class="rv" style="--d:120ms">
+          <div class="block-t">ИНСТРУМЕНТАРИЙ</div>
+          <div class="tools">
+            <span class="chip acc">CLAUDE</span><span class="chip acc">CHATGPT</span><span class="chip acc">CURSOR</span><span class="chip acc">THREE.JS</span><span class="chip acc">WEBAUDIO</span><span class="chip acc">CANVAS 2D</span><span class="chip acc">GODOT · УЧУ</span><span class="chip acc">BLENDER · УЧУ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact" data-sec="contact" style="--acc:var(--blu)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kick"><span>[ 06 // СВЯЗЬ ]</span><span class="line"></span><span class="dots">▮▮▮▮▯</span></div>
+      <h2 class="sec-title"><span class="ghost">06</span>ОТПРАВИТЬ СИГНАЛ</h2>
+      <p class="sec-sub">Идея, фидбек по прототипу, предложение коллаборации — всё влияет на очередь. Форма соберёт письмо, отправишь его ты: честно и без серверов.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="cform panel rv" id="contactBox"></div>
+      <div class="cinfo rv" style="--d:100ms">
+        <div class="email-row panel">
+          <svg class="ic" style="color:var(--prime)" aria-hidden="true"><use href="#i-mail"></use></svg>
+          <a href="mailto:hello@dvoronin.dev">hello@dvoronin.dev</a>
+          <button class="ibtn" data-action="copy" data-copy="hello@dvoronin.dev" aria-label="Скопировать email"><svg class="ic"><use href="#i-copy"></use></svg></button>
+        </div>
+        <div class="avail panel">
+          <span class="st st-ok"><i></i>ОТКРЫТ К ИДЕЯМ И ФИДБЕКУ</span>
+          <span class="clock" id="clock">--:--:--</span>
+          <small>ЛОКАЛЬНОЕ ВРЕМЯ АВТОРА · GMT+3</small>
+        </div>
+        <div class="honest-note panel"><b>Почему так:</b> бэкенда, соцсетей и рассылок ещё нет — это тоже часть очереди. Пока всё живёт в одном месте: дневник на сайте, почта для сигналов. Каждый ответ — от человека, не от автобота.</div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="#top"><span class="logo-chip">DV</span><span>ВОРОНИН<em>_</em><small>ПУБЛИЧНАЯ СБОРКА · ЧЕЛОВЕК × ИИ</small></span></a>
+        <p>Точка отсчёта, а не витрина достижений. Живое — трогай, замыслы — prioritize, прогресс — в дневнике.</p>
+      </div>
+      <div>
+        <div class="foot-t">НАВИГАЦИЯ</div>
+        <div class="foot-links"><a href="#live">→ Живое</a><a href="#queue">→ Очередь</a><a href="#log">→ Дневник</a><a href="#learn">→ Пилот</a><a href="#about">→ Автор</a><a href="#contact">→ Сигнал</a></div>
+      </div>
+      <div>
+        <div class="foot-t">СИСТЕМА</div>
+        <div class="foot-meta">
+          <span class="clock" id="footClock">--:--:--</span>
+          <span>DV-OS v0.1 · DAY ZERO</span>
+          <span><span class="kbd">T</span> терминал · <span class="kbd">M</span> звук</span>
+          <span>СОЗДАНО: ЧЕЛОВЕК × ИИ · 2026</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 ДМИТРИЙ ВОРОНИН // ДЕНЬ 0 — НАЧАЛО ВСЕГО</span><span>ФЕЙКОВЫХ РЕЛИЗОВ: <span style="color:var(--ok)">0</span></span></div>
+  </div>
+</footer>
+
+<button id="toTop" data-action="top" aria-label="Наверх"><svg class="ic"><use href="#i-up"></use></svg></button>
+<div id="modalRoot"></div>
+<div id="toasts" aria-live="polite"></div>
+<style id="gfStyle"></style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module" src="./assets/js/main.js"></script>
+</body>
+</html>
