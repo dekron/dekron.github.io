@@ -105,18 +105,19 @@ function renderLog(){
     </div></div>`;
 }
 function contactFormHTML(){return `<form id="contactForm" novalidate>
+  <fieldset disabled class="form-pending-fields">
   <div class="frow">
     <div class="field"><label class="f-label" for="cfName">Имя</label><input id="cfName" placeholder="Как к тебе обращаться" autocomplete="name"><small class="ferr"></small></div>
     <div class="field"><label class="f-label" for="cfEmail">Email для ответа</label><input id="cfEmail" type="email" placeholder="you@neon.dev" autocomplete="email"><small class="ferr"></small></div>
   </div>
   <div class="field"><label class="f-label" for="cfTopic">Тема сигнала</label><select id="cfTopic"><option>Идея для очереди</option><option>Фидбек по прототипу</option><option>Коллаборация</option><option>Пилотный курс</option><option>Другое</option></select><small class="ferr"></small></div>
   <div class="field"><label class="f-label" for="cfMsg">Сообщение</label><textarea id="cfMsg" placeholder="Пара абзацев: что за идея, что зацепило, что предложить…"></textarea><small class="ferr"></small></div>
-  <button class="btn btn-p btn-block" type="submit">${ico('send')}Собрать письмо</button>
-  <p class="form-note"><b>Честно:</b> сервера пока нет — кнопка подготовит письмо в твоём почтовом клиенте, отправишь его ты.</p></form>`;}
+  <button class="btn btn-p btn-block" type="submit">${ico('send')}Форма скоро заработает</button>
+  </fieldset>
+  <p class="form-note"><b>Форма пока не подключена.</b> Напиши мне в Telegram или MAX.</p></form>`;}
 
 /* priority */
 function prioText(){return prio.map((id,i)=>{const q=QUEUE.find(x=>x.id===id);return `${i+1}. ${q.title} (${KIND[q.kind].toLowerCase()}) — ${q.stage.toLowerCase()}`;}).join('\n');}
-function prioMail(){const body=`Привет, Дмитрий!\n\nМой приоритет для очереди DV-цеха:\n\n${prioText()}\n\n— отправлено со страницы «День 0»`;return `mailto:hello@dvoronin.dev?subject=${encodeURIComponent('Приоритеты очереди // сигнал')}&body=${encodeURIComponent(body)}`;}
 function renderPrio(){
   $('#prioCount').textContent=prio.length;
   const list=$('#prioList');
@@ -177,7 +178,7 @@ function openQueue(id){
   <div class="block-t" style="color:var(--ok)">СЧИТАЮ ГОТОВЫМ, КОГДА</div>
   <div class="gm-specs">${q.ready.map((r,i)=>`<div class="spec"><span>Критерий 0${i+1}</span><b>${r}</b></div>`).join('')}</div>
   <div class="gm-acts"><button class="btn btn-p need-btn" data-action="need" data-id="${q.id}">${ico('heart')}<span class="need-lbl">Мне нужно</span></button>
-  <button class="btn btn-s" data-action="prio-mail">${ico('send')}Отправить приоритет</button></div>`,{label:q.title,cls:'modal-wide'});
+  <button class="btn btn-s" data-action="prio-copy">${ico('copy')}Скопировать приоритет</button></div>`,{label:q.title,cls:'modal-wide'});
   syncNeed();
 }
 function openLesson(){
@@ -248,7 +249,7 @@ case'theme':if(hues[arg]!=null){setPalette(hues[arg]);tprint(`палитра я�
 case'sound':if(arg==='on'||arg==='off'){AudioSys.setOn(arg==='on');tprint('звук: '+(arg==='on'?'ВКЛ ✓':'ВЫКЛ'),'acc');}else tprint('usage: sound on|off','err');break;
 case'day':tprint('ДЕНЬ 0. Всё только начинается — и это видно на витрине.','acc');break;
 case'whoami':tprint('Дмитрий Воронин · начало пути · строю публично в паре с ИИ.','acc');break;
-case'contact':tprint('email: <span class="acc">hello@dvoronin.dev</span> · форма — в разделе «Сигнал».');break;
+case'contact':tprint('Telegram: <span class="acc">@dekron</span> · Telegram и MAX — в разделе «Сигнал».');break;
 case'date':tprint(new Date().toLocaleString('ru-RU'),'acc');break;
 case'clear':$('#termOut').innerHTML='';break;
 case'sudo':tprint('доступ запрещён: у цеха пока нет даже бэкенда, не то что root ;)','err');break;
@@ -297,30 +298,10 @@ $('#aurora').style.filter=`hue-rotate(${HUES[id]||0}deg)`;}),{rootMargin:'-40% 0
 $$('section[data-sec]').forEach(s=>spy.observe(s));
 new IntersectionObserver(es=>es.forEach(e=>{heroInView=e.isIntersecting;const s=$('#hudState');if(s)s.textContent=heroInView?'ACTIVE':'IDLE';}),{rootMargin:'120px'}).observe($('#coreStage'));}
 
-/* forms */
-function setErr(input,msg){const f=input.closest('.field')||input.parentElement;const err=f.querySelector('.ferr');if(err)err.textContent=msg||'';input.classList.toggle('bad',!!msg);input.setAttribute('aria-invalid',!!msg);if(msg)AudioSys.sfx('err');return!msg;}
-const emailOK=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-function pushLead(kind,data){const a=store.get('dv_leads',[]);a.push({kind,...data,ts:Date.now()});store.set('dv_leads',a);}
-function draftBlock(title,msg,subject,body,extraBtn){
-return `<div class="ok-block"><span class="ok-ic">${ico('check')}</span><h4>${title}</h4><p>${msg}</p>
-<div class="ok-acts"><a class="btn btn-p btn-sm" href="mailto:hello@dvoronin.dev?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}">${ico('send')}Открыть письмо</a>
-<button class="btn btn-s btn-sm" data-action="copy" data-copy="${esc(body)}">${ico('copy')}Скопировать текст</button>${extraBtn||''}</div>
-<p style="font-family:var(--fm);font-size:9.5px;color:var(--dim)">ЧЕРНОВИК СОХРАНЁН НА УСТРОЙСТВЕ · ОТПРАВКА — ЗА ТОБОЙ</p></div>`;}
-document.addEventListener('submit',e=>{const f=e.target;
-if(f.id==='waitForm'){e.preventDefault();const n=$('#wfName'),em=$('#wfEmail'),g=$('#wfGoal');
-let ok=setErr(n,n.value.trim().length>=2?'':'Минимум 2 символа');ok=setErr(em,emailOK(em.value.trim())?'':'Похоже, в email опечатка')&&ok;
-if(!ok)return;const name=n.value.trim(),email=em.value.trim(),goal=g.value.trim();
-pushLead('pilot',{name,email,goal});
-const body=`Привет, Дмитрий!\n\nХочу в пилотный поток «Геймдев с ИИ» (10 мест за фидбек).\n\nИмя: ${name}\nEmail: ${email}\nЦель на 2 месяца: ${goal||'—'}\n\nГотов(а) давать подробный фидбек по каждому модулю.\n\n— заявка со страницы «День 0»`;
-f.outerHTML=draftBlock('ЧЕРНОВИК ЗАЯВКИ ГОТОВ','Нажми «Открыть письмо» — заявка уйдёт мне напрямую. Место в листе закрепится после ответа.',`Пилот «Геймдев с ИИ» // заявка`,body);
-toast('Заявка собрана — осталось отправить письмо','ok');AudioSys.sfx('ok');}
-else if(f.id==='contactForm'){e.preventDefault();const n=$('#cfName'),em=$('#cfEmail'),m=$('#cfMsg');
-let ok=setErr(n,n.value.trim().length>=2?'':'Минимум 2 символа');ok=setErr(em,emailOK(em.value.trim())?'':'Похоже, в email опечатка')&&ok;ok=setErr(m,m.value.trim().length>=10?'':'Минимум 10 символов — расскажи чуть подробнее')&&ok;
-if(!ok)return;const name=n.value.trim(),email=em.value.trim(),topic=$('#cfTopic').value,msg=m.value.trim();
-pushLead('signal',{name,email,topic,msg});
-const body=`Привет, Дмитрий!\n\nТема: ${topic}\n\n${msg}\n\n— ${name}\nОтвет: ${email}\n\n— со страницы «День 0»`;
-$('#contactBox').innerHTML=draftBlock('ПИСЬМО СОБРАНО','Открой его в почтовом клиенте и нажми «отправить» — я отвечу в течение 24 часов.',`${topic} // сигнал со страницы`,body,`<button class="btn btn-ghost btn-sm" data-action="contact-again">${ico('reset')}Ещё сигнал</button>`);
-toast('Черновик готов — отправка за тобой','ok');AudioSys.sfx('ok');}});
+/* Forms are placeholders until a delivery service is connected. */
+document.addEventListener('submit', e => {
+  if (e.target.id === 'waitForm' || e.target.id === 'contactForm') e.preventDefault();
+});
 
 /* menu */
 function toggleMenu(force){const open=force!=null?force:!$('#menu').classList.contains('open');
@@ -345,7 +326,6 @@ case'queue-details':openQueue(id);break;
 case'need':toggleNeed(id);break;
 case'prio-move':movePrio(id,+el.dataset.d);break;
 case'prio-copy':if(!prio.length){toast('Приоритет пуст — отметь хоть один замысел','warn');break;}copyText(prioText(),'Приоритет скопирован — вставляй куда угодно');break;
-case'prio-mail':if(!prio.length){toast('Сначала отметь «мне нужно» на карточках','warn');break;}window.location.href=prioMail();toast('Открываю почтовый клиент со списком…','info');break;
 case'prio-reset':{if(!prio.length)break;const snap=[...prio];prio=[];savePrio();syncNeed();toast('Приоритет очищен','warn',{label:'Вернуть',fn:()=>{prio=snap;savePrio();syncNeed();}});break;}
 case'filter':setFilter(el.dataset.f);break;
 case'acc':{const acc=el.closest('.acc');const open=acc.classList.toggle('open');el.setAttribute('aria-expanded',open);break;}
@@ -355,7 +335,6 @@ case'goto-term':gotoEl('#termPanel','#termIn');break;
 case'goto-core':gotoEl('#top');break;
 case'goto-queue':gotoEl('#queue');break;
 case'goto-wait':gotoEl('#waitCard','#wfName');break;
-case'contact-again':$('#contactBox').innerHTML=contactFormHTML();break;
 case'vox':toggleVox();break;
 case'gf-copy':copyText($('#gfCode').textContent,'CSS скопирован');break;
 case'gf-html':gfDownload();break;

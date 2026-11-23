@@ -182,15 +182,20 @@
 .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
 .cform{padding:26px}
 .cinfo{display:flex;flex-direction:column;gap:14px}
-.email-row{display:flex;align-items:center;gap:12px;padding:18px}
-.email-row a{font-family:var(--fm);font-size:15px;color:var(--prime);text-shadow:0 0 12px var(--prime-glow);word-break:break-all}
-.email-row a:hover{text-decoration:underline}
-.email-row .ibtn{margin-left:auto}
-.avail{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
-.avail .clock{font-family:var(--fd);font-size:26px;color:#fff;text-shadow:0 0 16px var(--prime-glow);letter-spacing:.06em}
-.avail small{font-family:var(--fm);font-size:9.5px;letter-spacing:.18em;color:var(--dim)}
+.contact-link{display:flex;align-items:center;gap:14px;padding:18px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.contact-link:hover{transform:translateY(-3px);border-color:var(--prime-soft);box-shadow:0 0 24px rgba(0,240,255,.1)}
+.contact-link-icon{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:12px;background:var(--prime-dim);color:var(--prime)}
+.contact-link-icon .ic{width:21px;height:21px}
+.contact-max-icon{background:rgba(123,43,255,.14);color:#b58aff;font-family:var(--fd);font-size:19px}
+.contact-link-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.contact-link-text b{font-family:var(--fd);font-size:15px;letter-spacing:.05em;color:var(--tx)}
+.contact-link-text small{font-family:var(--fm);font-size:11px;color:var(--mut)}
+.contact-link-arrow{margin-left:auto;color:var(--prime);font-size:22px}
+.contact-link-max .contact-link-arrow{color:#b58aff}
 .honest-note{padding:16px 18px;font-size:12.5px;color:var(--mut);line-height:1.7;border-style:dashed}
-.honest-note b{color:var(--warn);font-weight:600}
+.form-pending-fields{min-width:0;border:0;padding:0;margin:0}
+.form-pending-fields :disabled{cursor:not-allowed}
+.form-pending-fields .btn:disabled{opacity:.55;box-shadow:none;transform:none}
 
 footer{position:relative;z-index:2;border-top:1px solid var(--line);background:rgba(4,6,13,.9);margin-top:40px}
 .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:34px;padding:46px 0 34px}

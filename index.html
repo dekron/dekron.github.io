@@ -266,10 +266,9 @@
       </div>
       <aside class="prio panel rv" style="--d:120ms" aria-label="Твой приоритет">
         <div class="prio-head"><span>ТВОЙ ПРИОРИТЕТ</span><b><span id="prioCount">0</span>/7</b></div>
-        <p class="prio-note">Хранится на твоём устройстве. Перетаскивай строки или жми ▲▼ — порядок в письме будет таким же.</p>
+        <p class="prio-note">Хранится на твоём устройстве. Перетаскивай строки или жми ▲▼, затем скопируй список и отправь его в мессенджере.</p>
         <ol class="prio-list" id="prioList"></ol>
         <div class="prio-acts">
-          <button class="btn btn-p btn-sm" data-action="prio-mail"><svg class="ic" aria-hidden="true"><use href="#i-send"></use></svg>Отправить письмом</button>
           <button class="btn btn-s btn-sm" data-action="prio-copy"><svg class="ic" aria-hidden="true"><use href="#i-copy"></use></svg>Скопировать список</button>
           <button class="btn btn-ghost btn-sm" data-action="prio-reset"><svg class="ic" aria-hidden="true"><use href="#i-reset"></use></svg>Сбросить</button>
         </div>
@@ -318,20 +317,22 @@
         </div>
       </div>
       <div class="learn-card panel energy rv" style="--d:100ms;--acc:var(--amb)" id="waitCard">
-        <span class="st st-warn"><i></i>ПИЛОТ · ЛИСТ ОЖИДАНИЯ ОТКРЫТ</span>
+        <span class="st st-warn"><i></i>ПИЛОТ · ЗАПИСЬ СКОРО</span>
         <h3>ПЕРВЫЙ ПОТОК: 10 МЕСТ ЗА ФИДБЕК</h3>
         <div class="cond">
           <div class="cond-row"><small><span>УСЛОВИЕ 1: ЖИВЫХ ПРОТОТИПА ДЛЯ РАЗБОРА</span><b>1 / 3</b></small><div class="bar"><i style="--v:33%"></i></div></div>
           <div class="cond-row"><small><span>УСЛОВИЕ 2: ГРУППА ПИЛОТА</span><b>0 / 10</b></small><div class="bar"><i style="--v:0%"></i></div></div>
         </div>
         <form id="waitForm" novalidate>
+          <fieldset disabled class="form-pending-fields">
           <div class="frow">
             <div class="field"><label class="f-label" for="wfName">Имя</label><input id="wfName" placeholder="Как к тебе обращаться" autocomplete="name"><small class="ferr"></small></div>
             <div class="field"><label class="f-label" for="wfEmail">Email</label><input id="wfEmail" type="email" placeholder="you@neon.dev" autocomplete="email"><small class="ferr"></small></div>
           </div>
           <div class="field"><label class="f-label" for="wfGoal">Что хочешь уметь через 2 месяца?</label><textarea id="wfGoal" placeholder="Например: собрать свою первую игру с ИИ и выложить её…"></textarea><small class="ferr"></small></div>
-          <button class="btn btn-p btn-block" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-send"></use></svg>В лист пилота</button>
-          <p class="form-note"><b>Честно:</b> сервера у сайта пока нет — кнопка соберёт письмо-заявку, отправишь его ты. Никаких скрытых подписок.</p>
+          <button class="btn btn-p btn-block" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-send"></use></svg>Запись скоро откроется</button>
+          </fieldset>
+          <p class="form-note"><b>Форма пока не подключена.</b> Если хочешь узнать о пилоте, напиши мне в Telegram или MAX.</p>
         </form>
       </div>
     </div>
@@ -423,22 +424,20 @@
     <div class="sec-head rv">
       <div class="sec-kick"><span>[ 06 // СВЯЗЬ ]</span><span class="line"></span><span class="dots">▮▮▮▮▯</span></div>
       <h2 class="sec-title"><span class="ghost">06</span>ОТПРАВИТЬ СИГНАЛ</h2>
-      <p class="sec-sub">Идея, фидбек по прототипу, предложение коллаборации — всё влияет на очередь. Форма соберёт письмо, отправишь его ты: честно и без серверов.</p>
+      <p class="sec-sub">Идея, фидбек по прототипу или предложение коллаборации? Напиши мне в Telegram или MAX.</p>
     </div>
     <div class="contact-grid">
       <div class="cform panel rv" id="contactBox"></div>
       <div class="cinfo rv" style="--d:100ms">
-        <div class="email-row panel">
-          <svg class="ic" style="color:var(--prime)" aria-hidden="true"><use href="#i-mail"></use></svg>
-          <a href="mailto:hello@dvoronin.dev">hello@dvoronin.dev</a>
-          <button class="ibtn" data-action="copy" data-copy="hello@dvoronin.dev" aria-label="Скопировать email"><svg class="ic"><use href="#i-copy"></use></svg></button>
-        </div>
-        <div class="avail panel">
-          <span class="st st-ok"><i></i>ОТКРЫТ К ИДЕЯМ И ФИДБЕКУ</span>
-          <span class="clock" id="clock">--:--:--</span>
-          <small>ЛОКАЛЬНОЕ ВРЕМЯ АВТОРА · GMT+3</small>
-        </div>
-        <div class="honest-note panel"><b>Почему так:</b> бэкенда, соцсетей и рассылок ещё нет — это тоже часть очереди. Пока всё живёт в одном месте: дневник на сайте, почта для сигналов. Каждый ответ — от человека, не от автобота.</div>
+        <a class="contact-link panel" href="https://t.me/dekron" target="_blank" rel="noopener noreferrer" aria-label="Написать Дмитрию в Telegram (откроется в новой вкладке)">
+          <span class="contact-link-icon" aria-hidden="true"><svg class="ic"><use href="#i-send"></use></svg></span>
+          <span class="contact-link-text"><b>TELEGRAM</b><small>@dekron</small></span><span class="contact-link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact-link contact-link-max panel" href="https://max.ru/u/f9LHodD0cOLj5ZwIna55bio8mV3t3ugs9bNYpKV8oBPrytPC-0SlsdPBH_8" target="_blank" rel="noopener noreferrer" aria-label="Написать Дмитрию в MAX (откроется в новой вкладке)">
+          <span class="contact-link-icon contact-max-icon" aria-hidden="true">М</span>
+          <span class="contact-link-text"><b>MAX</b><small>Написать сообщение</small></span><span class="contact-link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <div class="honest-note panel">Выбирай удобный мессенджер — отвечаю лично.</div>
       </div>
     </div>
   </div>
