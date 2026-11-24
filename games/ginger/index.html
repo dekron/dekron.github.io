@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Рыжик — приключение котика</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/game.css">
+</head>
+<body data-state="title">
+<canvas id="cv"></canvas>
+<div id="vig"></div>
+
+<div id="topbar">
+  <button class="icobtn" id="btnSound" title="Звук вкл/выкл" aria-label="Звук">
+    <svg id="icoSndOn" viewBox="0 0 24 24"><path d="M4 9v6h4l6 5V4L8 9H4z"/><path class="stroke" d="M16.5 8.6a4.6 4.6 0 010 6.8M18.8 6.2a8 8 0 010 11.6"/></svg>
+    <svg id="icoSndOff" viewBox="0 0 24 24" style="display:none"><path d="M4 9v6h4l6 5V4L8 9H4z"/><path class="stroke" d="M16.5 9.5l5 5m0-5l-5 5"/></svg>
+  </button>
+  <button class="icobtn" id="btnPause" title="Пауза (P)" aria-label="Пауза"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4.4" height="14" rx="1.6"/><rect x="13.6" y="5" width="4.4" height="14" rx="1.6"/></svg></button>
+  <button class="icobtn" id="btnRestart" title="Заново (R)" aria-label="Заново"><svg viewBox="0 0 24 24"><path d="M12 5V1.8L6.8 6l5.2 4.2V7c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6H4c0 4.4 3.6 8 8 8s8-3.6 8-8-3.6-8-8-8z"/></svg></button>
+</div>
+
+<div id="hud">
+  <div class="chip" id="chipLevel"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="6.6" cy="9.6" r="2.1"/><circle cx="12" cy="7.6" r="2.1"/><circle cx="17.4" cy="9.6" r="2.1"/></svg><span id="hudLevel">1 · Кухня</span></div>
+  <div class="chip" id="chipFish"><svg viewBox="0 0 24 24"><path d="M2.5 12c2.4-3.6 5.8-5.6 9.3-5.6 3.4 0 6.5 2 8.7 5.6-2.2 3.6-5.3 5.6-8.7 5.6-3.5 0-6.9-2-9.3-5.6z"/><path d="M20.5 12l3-3.4v6.8z"/><circle cx="7.6" cy="10.9" r="1.15" fill="#1d1038"/></svg><span id="hudFish">0/3</span></div>
+  <div class="chip" id="chipLives"><svg viewBox="0 0 24 24"><path d="M12 21s-7.6-4.8-10-9.1C.3 8.9 2.3 5 6 5c2.2 0 3.7 1.2 6 3.6C14.3 6.2 15.8 5 18 5c3.7 0 5.7 3.9 4 6.9C19.6 16.2 12 21 12 21z"/></svg><span id="hudLives">×9</span></div>
+</div>
+<div id="objective"></div>
+
+<div id="touch">
+  <div class="tgroup">
+    <div class="tbtn" id="tLeft"><svg viewBox="0 0 24 24"><path d="M15.5 4.5v15L6 12z"/></svg></div>
+    <div class="tbtn" id="tRight"><svg viewBox="0 0 24 24"><path d="M8.5 4.5v15L19 12z"/></svg></div>
+  </div>
+  <div class="tgroup">
+    <div class="tbtn" id="tJump"><svg viewBox="0 0 24 24"><path d="M12 4l8 9h-5v7H9v-7H4z"/></svg></div>
+  </div>
+</div>
+
+<!-- TITLE -->
+<div class="screen on" id="scr-title">
+  <div class="panel">
+    <svg class="pawmark" viewBox="0 0 24 24"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="6.6" cy="9.6" r="2.1"/><circle cx="12" cy="7.6" r="2.1"/><circle cx="17.4" cy="9.6" r="2.1"/></svg>
+    <div class="kicker">ночное приключение</div>
+    <h1 class="logo">РЫЖИК</h1>
+    <div class="subtitle">большое путешествие маленького кота</div>
+    <p class="story">Рыжик учуял <b>свежую рыбку</b> на другом конце города — через кухню, двор, чердак и крыши. Проведи его через <b>8 уровней</b> до рыбного рынка!</p>
+    <div class="btnrow">
+      <button class="btn" id="btnPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Играть</button>
+      <button class="btn sec" id="btnLevels"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Уровни</button>
+    </div>
+    <div class="keys">
+      <span class="key"><b>← →</b> бежать</span><span class="key"><b>Пробел</b> прыжок</span>
+      <span class="key"><b>M</b> мяукнуть</span><span class="key"><b>P</b> пауза</span>
+    </div>
+    <div class="tip">Прыгай врагам <em>на голову</em> — и кликни котика, чтобы погладить 🐾</div>
+  </div>
+</div>
+
+<!-- LEVELS -->
+<div class="screen" id="scr-levels">
+  <div class="panel">
+    <div class="kicker">маршрут рыжика</div>
+    <h2 class="ptitle">Выбери уровень</h2>
+    <div class="lvgrid" id="lvGrid"></div>
+    <div class="btnrow"><button class="btn sec" id="btnLvBack">← В меню</button></div>
+    <button class="resetlink" id="btnReset">сбросить прогресс</button>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="screen" id="scr-intro">
+  <div class="panel">
+    <div class="kicker" id="introKick">уровень</div>
+    <div class="lvnum" id="introNum">1</div>
+    <h2 class="ptitle" id="introName">Кухня</h2>
+    <p class="story" id="introStory"></p>
+    <div class="btnrow"><button class="btn" id="btnBegin"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Поехали!</button></div>
+    <div class="keys"><span class="key">собери <b>3 рыбки</b></span><span class="key">дойди до <b>корзинки</b></span><span class="key"><b>9</b> жизней</span></div>
+  </div>
+</div>
+
+<!-- PAUSE -->
+<div class="screen" id="scr-pause">
+  <div class="panel">
+    <div class="kicker">перерыв</div>
+    <h2 class="ptitle">Пауза</h2>
+    <p class="story">Котик умывается и ждёт тебя…</p>
+    <div class="statrow" id="pauseStats"></div>
+    <div class="btnrow">
+      <button class="btn" id="btnResume"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Продолжить</button>
+      <button class="btn sec" id="btnPauseRetry">↻ Заново</button>
+      <button class="btn sec" id="btnPauseLevels">Уровни</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLEAR -->
+<div class="screen" id="scr-clear">
+  <div class="panel">
+    <div class="kicker">мяу-у!</div>
+    <h2 class="ptitle">Уровень пройден!</h2>
+    <div class="bigstars" id="clearStars"></div>
+    <div class="statrow" id="clearStats"></div>
+    <div class="btnrow">
+      <button class="btn" id="btnNext">Дальше ▶</button>
+      <button class="btn sec" id="btnClearRetry">↻ Ещё раз</button>
+      <button class="btn sec" id="btnClearLevels">Уровни</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAME OVER -->
+<div class="screen" id="scr-over">
+  <div class="panel">
+    <div class="kicker" style="color:var(--danger)">ох…</div>
+    <h2 class="ptitle">Лапки устали</h2>
+    <p class="story">Все <b>9 жизней</b> потрачены. Котик немного поспит на тёплом подоконнике — и попробует снова.</p>
+    <div class="btnrow">
+      <button class="btn" id="btnRetry">↻ Попробовать снова</button>
+      <button class="btn sec" id="btnOverLevels">Уровни</button>
+    </div>
+  </div>
+</div>
+
+<!-- WIN -->
+<div class="screen" id="scr-win">
+  <div class="panel">
+    <svg class="wintrophy" viewBox="0 0 24 24"><path fill="#ffc93c" d="M2.5 12c2.4-3.6 5.8-5.6 9.3-5.6 3.4 0 6.5 2 8.7 5.6-2.2 3.6-5.3 5.6-8.7 5.6-3.5 0-6.9-2-9.3-5.6z"/><path fill="#ffb347" d="M20.5 12l3-3.4v6.8z"/><circle cx="7.6" cy="10.9" r="1.15" fill="#1d1038"/></svg>
+    <div class="kicker">мур-р-р!</div>
+    <h2 class="ptitle">Рыжик добрался до рыбки!</h2>
+    <p class="story">Кухня, двор, чердак, крыши, дождь и башня — всё позади. Самая свежая рыбка города досталась самому упорному коту. <b>Мур!</b></p>
+    <div class="statrow" id="winStats"></div>
+    <div class="btnrow">
+      <button class="btn" id="btnWinLevels">Уровни ★</button>
+      <button class="btn sec" id="btnWinMenu">В меню</button>
+    </div>
+  </div>
+</div>
+
+<script defer src="./js/levels.js"></script>
+<script defer src="./js/audio.js"></script>
+<script defer src="./js/cat.js"></script>
+<script defer src="./js/game.js"></script>
+</body>
+</html>
