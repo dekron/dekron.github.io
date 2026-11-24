@@ -63,6 +63,7 @@ const sel=$('#cHue');if(sel)sel.value=PRESETS[h]?String(h):'custom';if(!skipStor
 /* renders */
 function renderLive(){
   $('#featCover').innerHTML=CV.grid;
+  const gc=$('#gingerCover');if(gc)gc.innerHTML=CV.ginger;
   const mods=[
     {id:'vox',icon:'wave',acc:'var(--mag)',name:'VOX.SYNTH',d:'Синтвейв-луп на чистом WebAudio — без сэмплов. Кнопка играет по-настоящему.',act:`<button class="btn btn-p btn-sm" data-action="vox">${ico('play')}<span class="vox-lbl">Слушать луп</span></button>`},
     {id:'pal',icon:'dice',acc:'var(--lim)',name:'НЕОН-ПАЛИТРЫ',d:'Генератор пятицветных неон-палитр: копия hex, экспорт JSON, применение к ядру.',act:`<button class="btn btn-s btn-sm" data-action="goto-pal">${ico('zap')}К палитрам</button>`},
@@ -209,6 +210,18 @@ function openLesson(){
 
 const openSnake = createSnake({ openModal, AudioSys, setSnakeApi: api => { snakeApi = api; } });
 
+function openGinger(){
+  openModal(`<div class="ginger-bar">
+    <span class="ginger-kick">ПРОТОТИП #002 · ДЕНЬ 0 · ЧЕЛОВЕК × ИИ</span>
+    <b>РЫЖИК<span class="ver">приключение котика</span></b>
+    <span class="ginger-hint">← → БЕГ · ПРОБЕЛ ПРЫЖОК · P ПАУЗА · M МЯУ</span></div>
+  <iframe class="ginger-frame" src="./games/ginger/index.html" title="РЫЖИК — прототип #002" allow="autoplay"></iframe>`,
+  {label:'РЫЖИК',cls:'modal-ginger',onOpen:()=>{
+    if(AudioSys.ctx&&AudioSys.on)AudioSys.master.gain.setTargetAtTime(0,AudioSys.ctx.currentTime,.05);
+    return()=>{if(AudioSys.ctx)AudioSys.master.gain.setTargetAtTime(AudioSys.on?.9:0,AudioSys.ctx.currentTime,.12);};
+  }});
+}
+
 /* glitch forge */
 const GF_HUES={cyan:['#00f0ff','#ff2bd6'],magenta:['#ff2bd6','#00f0ff'],lime:['#a8ff3e','#3d7bff'],amber:['#ffc233','#ff3355']};
 function glitchCSS(sel,o){const a=(o.int/100*12).toFixed(1),b=(o.int/100*7).toFixed(1);
@@ -237,13 +250,14 @@ function termExec(raw){const v=raw.trim();if(!v)return;tprint(`<span class="mag"
 const[a0,...rest]=v.split(/\s+/),cmd=a0.toLowerCase(),arg=(rest[0]||'').toLowerCase();
 const hues={cyan:187,magenta:311,lime:84,amber:42};
 switch(cmd){
-case'help':tprint('команды:','dim');[['help','список'],['live','что уже работает'],['queue','замыслы в очереди'],['need <id>','добавить в приоритет (drift, synapse, waste, ghost, deck, hud, course)'],['prio','твой приоритет'],['play','GRID RUNNER'],['lesson','бесплатный урок'],['theme cyan|magenta|lime|amber','палитра ядра'],['sound on|off','звук'],['day','какой сегодня день'],['contact','связь'],['clear','очистить']].forEach(c=>tprint(`  <span class="acc">${c[0]}</span> — ${c[1]}`));break;
-case'live':tprint('  GRID RUNNER · GLITCH.FORGE · VOX.SYNTH · ПАЛИТРЫ · ТЕРМИНАЛ · 3D-ЯДРО','ok');tprint('всё — на этой странице, всё — работает.','dim');break;
+case'help':tprint('команды:','dim');[['help','список'],['live','что уже работает'],['queue','замыслы в очереди'],['need <id>','добавить в приоритет (drift, synapse, waste, ghost, deck, hud, course)'],['prio','твой приоритет'],['play','GRID RUNNER'],['play2','РЫЖИК'],['lesson','бесплатный урок'],['theme cyan|magenta|lime|amber','палитра ядра'],['sound on|off','звук'],['day','какой сегодня день'],['contact','связь'],['clear','очистить']].forEach(c=>tprint(`  <span class="acc">${c[0]}</span> — ${c[1]}`));break;
+case'live':tprint('  GRID RUNNER · РЫЖИК · GLITCH.FORGE · VOX.SYNTH · ПАЛИТРЫ · ТЕРМИНАЛ · 3D-ЯДРО','ok');tprint('всё — на этой странице, всё — работает.','dim');break;
 case'queue':QUEUE.forEach(q=>tprint(`  <span class="acc">${q.id}</span> · ${q.title} · <span class="warn">${q.stage}</span> · не существует`));tprint('«need drift» — поставить первым в твоём приоритете.','dim');break;
 case'need':{const q=QUEUE.find(x=>x.id===arg);if(!q){tprint('usage: need drift|synapse|waste|ghost|deck|hud|course','err');break;}
 if(prio.includes(q.id))tprint(`${q.title} уже в приоритете (#${prio.indexOf(q.id)+1}).`,'warn');else{toggleNeed(q.id);tprint(`+ ${q.title} → приоритет #${prio.length} ✓`,'ok');}break;}
 case'prio':if(!prio.length)tprint('приоритет пуст — и это честно. «need drift»?','dim');else prio.forEach((id,i)=>{const q=QUEUE.find(x=>x.id===id);tprint(`  ${i+1}. ${q.title}`,'acc');});break;
 case'play':tprint('загрузка прототипа #001…','warn');setTimeout(openSnake,350);break;
+case'play2':case'cat':tprint('загрузка прототипа #002…','warn');setTimeout(openGinger,350);break;
 case'lesson':tprint('открываю урок 0.1…','acc');setTimeout(openLesson,250);break;
 case'theme':if(hues[arg]!=null){setPalette(hues[arg]);tprint(`палитра ядра → ${arg.toUpperCase()} ✓`,'acc');AudioSys.sfx('ok');}else tprint('usage: theme cyan|magenta|lime|amber','err');break;
 case'sound':if(arg==='on'||arg==='off'){AudioSys.setOn(arg==='on');tprint('звук: '+(arg==='on'?'ВКЛ ✓':'ВЫКЛ'),'acc');}else tprint('usage: sound on|off','err');break;
@@ -261,7 +275,7 @@ const inp=$('#termIn');
 inp.addEventListener('keydown',e=>{if(e.key==='Enter'){termExec(inp.value);inp.value='';}
 else if(e.key==='ArrowUp'){e.preventDefault();term.hi=Math.max(0,term.hi-1);inp.value=term.hist[term.hi]||'';}
 else if(e.key==='ArrowDown'){e.preventDefault();term.hi=Math.min(term.hist.length,term.hi+1);inp.value=term.hist[term.hi]||'';}
-else if(e.key==='Tab'){e.preventDefault();const cmds=['help','live','queue','need','prio','play','lesson','theme','sound','day','whoami','contact','date','clear'];const m=cmds.filter(c=>c.startsWith(inp.value.trim().toLowerCase()));if(m.length===1)inp.value=m[0]+' ';}});
+else if(e.key==='Tab'){e.preventDefault();const cmds=['help','live','queue','need','prio','play','play2','lesson','theme','sound','day','whoami','contact','date','clear'];const m=cmds.filter(c=>c.startsWith(inp.value.trim().toLowerCase()));if(m.length===1)inp.value=m[0]+' ';}});
 $('#termPanel').addEventListener('click',()=>{if(!String(window.getSelection()))inp.focus();});}
 
 /* loop */
@@ -321,6 +335,7 @@ case'sound-toggle':AudioSys.setOn(AudioSys.vox?true:!AudioSys.on);AudioSys.sfx('
 case'menu':toggleMenu();break;
 case'modal-close':closeModal();break;
 case'play-snake':openSnake();break;
+case'play-ginger':openGinger();break;
 case'lesson':openLesson();break;
 case'queue-details':openQueue(id);break;
 case'need':toggleNeed(id);break;

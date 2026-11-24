@@ -834,7 +834,7 @@ function drawAmbient(worldSpace){
   ctx.globalAlpha=1;ctx.restore();
 }
 function drawFloaters(){
-  ctx.font='700 15px Comfortaa, Nunito, sans-serif';ctx.textAlign='center';
+  ctx.font='700 15px Manrope, sans-serif';ctx.textAlign='center';
   for(const f of floaters){
     const a=clamp(f.life,0,1);
     ctx.globalAlpha=a;ctx.lineWidth=4;ctx.strokeStyle='rgba(20,10,35,.85)';

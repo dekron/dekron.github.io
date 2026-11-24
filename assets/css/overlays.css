@@ -4,6 +4,14 @@
 .modal{position:relative;width:min(660px,100%);max-height:88vh;display:flex;flex-direction:column;background:linear-gradient(165deg,#0d1430,#070c1c);border:1px solid var(--prime-soft);border-radius:18px;box-shadow:0 0 60px rgba(0,240,255,.12),0 30px 80px rgba(0,0,0,.6);animation:pop .32s cubic-bezier(.2,.7,.2,1.15)}
 .modal-wide{width:min(820px,100%)}
 .modal-snake{width:min(540px,100%)}
+.modal-ginger{width:min(1120px,100%);max-height:96vh}
+.modal-ginger .modal-body{padding:18px;display:flex;flex-direction:column;gap:12px}
+.ginger-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ginger-bar b{font-family:var(--fd);font-weight:400;font-size:19px;color:#fff;text-shadow:0 0 14px var(--prime-glow)}
+.ginger-bar .ver{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;color:var(--dim);margin-left:9px;text-shadow:none}
+.ginger-kick{font-family:var(--fm);font-size:9.5px;letter-spacing:.24em;color:var(--prime)}
+.ginger-hint{font-family:var(--fm);font-size:9.5px;letter-spacing:.12em;color:var(--dim)}
+.ginger-frame{width:100%;height:min(74vh,620px);border:1px solid var(--line);border-radius:12px;background:#05070f}
 .modal-x{position:absolute;top:12px;right:12px;z-index:5;width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:rgba(11,17,36,.9);color:var(--mut);transition:.2s}
 .modal-x:hover{color:var(--err);border-color:rgba(255,51,85,.5);transform:rotate(90deg)}
 .modal-body{overflow-y:auto;padding:26px;border-radius:18px}
