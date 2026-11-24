@@ -6,7 +6,7 @@
 .modal-snake{width:min(540px,100%)}
 .modal-ginger{width:min(1120px,100%);max-height:96vh}
 .modal-ginger .modal-body{padding:18px;display:flex;flex-direction:column;gap:12px}
-.ginger-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ginger-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-right:42px}
 .ginger-bar b{font-family:var(--fd);font-weight:400;font-size:19px;color:#fff;text-shadow:0 0 14px var(--prime-glow)}
 .ginger-bar .ver{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;color:var(--dim);margin-left:9px;text-shadow:none}
 .ginger-kick{font-family:var(--fm);font-size:9.5px;letter-spacing:.24em;color:var(--prime)}
