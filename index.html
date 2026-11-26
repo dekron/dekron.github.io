@@ -124,9 +124,9 @@
           <span class="st st-dim"><i></i>ЗАМЫСЕЛ</span>
         </div>
         <div class="hero-stats stage" style="--sd:.6s">
-          <div class="stat"><b><span data-count="7">0</span></b><span>живых модулей</span></div>
-          <div class="stat"><b><span data-count="7">0</span></b><span>замыслов в очереди</span></div>
-          <div class="stat"><b><span data-count="2">0</span></b><span>играбельных билда</span></div>
+          <div class="stat"><b><span data-count="8">0</span></b><span>живых модулей</span></div>
+          <div class="stat"><b><span data-count="6">0</span></b><span>замыслов в очереди</span></div>
+          <div class="stat"><b><span data-count="3">0</span></b><span>играбельных билда</span></div>
           <div class="stat"><b><span data-count="0">0</span></b><span>фейковых релизов</span></div>
         </div>
       </div>
@@ -206,6 +206,20 @@
       </div>
     </div>
 
+    <div class="live-feat panel energy rv" style="--acc:var(--mag);--d:160ms">
+      <div class="lf-cover" id="driftCover"></div>
+      <div class="lf-body">
+        <span class="lf-kick">ПРОТОТИП #003 · СОБРАН СЕГОДНЯ · ЧЕЛОВЕК × ИИ</span>
+        <h3 class="lf-title">NEON DRIFT</h3>
+        <p>Третий играбельный билд цеха: синтвейв-гонки по процедурным эстакадам над неоновым городом. Дрифт заряжает нитро, ворота продлевают время, саундтрек разгоняется вместе с машиной. Три авторские трассы плюс генератор случайных — каждая собирается за миллисекунды. На телефоне — тач-контрол.</p>
+        <div class="lf-chips"><span class="chip acc">БЕЗ УСТАНОВКИ</span><span class="chip acc">ПРОЦЕДУРНЫЕ ТРАССЫ</span><span class="chip acc">ДРИФТ → НИТРО</span><span class="chip acc">ТАЧ-КОНТРОЛ</span></div>
+        <div class="lf-acts">
+          <button class="btn btn-p" data-action="play-drift"><svg class="ic" aria-hidden="true"><use href="#i-play"></use></svg>Играть сейчас</button>
+          <a class="btn btn-s" href="./games/drift/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-ar"></use></svg>На весь экран</a>
+        </div>
+      </div>
+    </div>
+
     <div class="forge panel rv" id="forge" style="--acc:var(--prime)">
       <div class="forge-head">
         <span class="p-ico" style="width:40px;height:40px"><svg class="ic" aria-hidden="true"><use href="#i-glitch"></use></svg></span>
@@ -279,7 +293,7 @@
         <div class="queue-grid" id="queueGrid"></div>
       </div>
       <aside class="prio panel rv" style="--d:120ms" aria-label="Твой приоритет">
-        <div class="prio-head"><span>ТВОЙ ПРИОРИТЕТ</span><b><span id="prioCount">0</span>/7</b></div>
+        <div class="prio-head"><span>ТВОЙ ПРИОРИТЕТ</span><b><span id="prioCount">0</span>/6</b></div>
         <p class="prio-note">Хранится на твоём устройстве. Перетаскивай строки или жми ▲▼, затем скопируй список и отправь его в мессенджере.</p>
         <ol class="prio-list" id="prioList"></ol>
         <div class="prio-acts">
@@ -334,7 +348,7 @@
         <span class="st st-warn"><i></i>ПИЛОТ · ЗАПИСЬ СКОРО</span>
         <h3>ПЕРВЫЙ ПОТОК: 10 МЕСТ ЗА ФИДБЕК</h3>
         <div class="cond">
-          <div class="cond-row"><small><span>УСЛОВИЕ 1: ЖИВЫХ ПРОТОТИПА ДЛЯ РАЗБОРА</span><b>2 / 3</b></small><div class="bar"><i style="--v:66%"></i></div></div>
+          <div class="cond-row"><small><span>УСЛОВИЕ 1: ЖИВЫХ ПРОТОТИПА ДЛЯ РАЗБОРА</span><b style="color:var(--ok)">3 / 3 ✓</b></small><div class="bar"><i style="--v:100%"></i></div></div>
           <div class="cond-row"><small><span>УСЛОВИЕ 2: ГРУППА ПИЛОТА</span><b>0 / 10</b></small><div class="bar"><i style="--v:0%"></i></div></div>
         </div>
         <form id="waitForm" novalidate>

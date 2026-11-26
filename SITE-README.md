@@ -25,6 +25,7 @@ python3 -m http.server 8000
 - `assets/css/` — базовое оформление, разделы, модальные окна и адаптивные стили. Файлы подключены именно в этом порядке.
 - `assets/js/content.js` — очередь проектов и записи дневника; `covers.js` — их SVG-обложки.
 - `assets/js/snake.js` — игра GRID RUNNER; открывается в модальном окне и очищает обработчики при закрытии.
+- `games/ginger/` и `games/drift/` — автономные прототипы РЫЖИК и NEON DRIFT; открываются в модальных iframe с главной страницы и работают отдельно по прямым ссылкам. Тесты: `node --test games/ginger/tests/gameplay.test.cjs` и `node --test games/drift/tests/gameplay.test.cjs`.
 - `assets/js/scene.js` и `rain.js` — 3D-сцена и фоновый эффект; `main.js` — взаимодействия страницы; `utils.js` — общие функции.
 - `assets/js/bootstrap.js` — защита от зависания стартового экрана при ошибке загрузки.
 

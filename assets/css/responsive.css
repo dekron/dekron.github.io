@@ -27,6 +27,8 @@
   .snake-ctl{justify-content:center}
   .ginger-hint{display:none}
   .ginger-frame{height:min(62vh,480px)}
+  .drift-hint{display:none}
+  .drift-frame{height:min(62vh,480px)}
 }
 @media (max-width:480px){
   .wrap{padding:0 16px}
